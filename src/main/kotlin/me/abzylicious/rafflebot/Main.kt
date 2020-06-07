@@ -1,5 +1,6 @@
 package me.abzylicious.rafflebot
 
+import me.abzylicious.rafflebot.configuration.BotConfiguration
 import me.jakejmattson.kutils.api.dsl.configuration.startBot
 import kotlin.system.exitProcess
 
@@ -11,5 +12,10 @@ fun main(args: Array<String>) {
         exitProcess(-1)
     }
 
-    startBot(token)
+    startBot(token) {
+        val configuration: BotConfiguration = discord.getInjectionObjects(BotConfiguration::class)
+        configure {
+            prefix { configuration.prefix }
+        }
+    }
 }
