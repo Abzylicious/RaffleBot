@@ -9,5 +9,5 @@ private lateinit var jda: JDA
 @Service
 class JdaInitializer(discord: Discord) { init { jda = discord.jda } }
 
-fun String.toChannel() = jda.getTextChannelById(this)
-fun String.isValidChannelId() = try { this.toChannel(); true } catch(e: Exception) { false }
+fun String.toChannel() = try { jda.getTextChannelById(this) } catch (e: Exception) { null }
+fun String.isValidChannelId() = this.toChannel() != null
