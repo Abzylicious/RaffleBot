@@ -1,4 +1,5 @@
 config/*
+data/*
 .idea/**
 target/**
 **.iml
