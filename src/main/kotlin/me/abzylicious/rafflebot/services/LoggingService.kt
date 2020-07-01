@@ -2,8 +2,8 @@ package me.abzylicious.rafflebot.services
 
 import me.abzylicious.rafflebot.configuration.BotConfiguration
 import me.abzylicious.rafflebot.configuration.Messages
-import me.abzylicious.rafflebot.extensions.isValidChannelId
-import me.abzylicious.rafflebot.extensions.toChannel
+import me.abzylicious.rafflebot.extensions.stdlib.isValidChannelId
+import me.abzylicious.rafflebot.extensions.stdlib.toChannel
 import me.jakejmattson.kutils.api.annotations.Service
 
 @Service
