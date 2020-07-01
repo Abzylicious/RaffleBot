@@ -5,6 +5,11 @@
 | ---------- | -------------------------- |
 | (Argument) | This argument is optional. |
 
+## Raffle
+| Commands | Arguments                               | Description                    |
+| -------- | --------------------------------------- | ------------------------------ |
+| Convert  | Message, (Guild Emote \| Unicode Emote) | Converts a message to a raffle |
+
 ## Utility
 | Commands | Arguments | Description                 |
 | -------- | --------- | --------------------------- |
