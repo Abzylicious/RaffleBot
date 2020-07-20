@@ -9,18 +9,16 @@ import me.abzylicious.rafflebot.persistence.RaffleRepository
 import me.abzylicious.rafflebot.utilities.Randomizer
 import me.jakejmattson.kutils.api.Discord
 import me.jakejmattson.kutils.api.annotations.Service
-import me.jakejmattson.kutils.api.extensions.jda.fullName
 import me.jakejmattson.kutils.api.services.PersistenceService
 import net.dv8tion.jda.api.entities.User
 
 data class Winner(val id: String, val name: String)
 
 @Service
-class RaffleService(private val discord: Discord,
-                    private val persistenceService: PersistenceService,
-                    private val repository: RaffleRepository = RaffleRepository(discord, persistenceService),
-                    private val randomizer: Randomizer<User>
-) {
+class RaffleService(discord: Discord, persistenceService: PersistenceService) {
+
+    private val repository: RaffleRepository = RaffleRepository(discord, persistenceService)
+    private val randomizer: Randomizer<User> = Randomizer()
 
     fun addRaffle(channelId: String, messageId: String, reaction: String): Boolean {
         val exists = repository.exists(messageId)
