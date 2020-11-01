@@ -1,15 +1,13 @@
 package me.abzylicious.rafflebot.persistence
 
-import me.jakejmattson.kutils.api.Discord
-import me.jakejmattson.kutils.api.services.PersistenceService
+import me.jakejmattson.discordkt.api.Discord
 
-class RaffleRepository(private val discord: Discord,
-                       private val persistence: PersistenceService) {
+class RaffleRepository(private val discord: Discord) {
 
     private val raffleEntries = loadRaffles()
 
     private fun loadRaffles() = discord.getInjectionObjects(RaffleEntries::class)
-    private fun saveRaffles() = persistence.save(raffleEntries)
+    private fun saveRaffles() = raffleEntries.save()
 
     fun getAll() = raffleEntries.raffles.toList()
     fun get(messageId: String) = raffleEntries.raffles.find { it.MessageId == messageId }

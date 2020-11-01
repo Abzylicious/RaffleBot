@@ -1,6 +1,6 @@
 package me.abzylicious.rafflebot.persistence
 
-import me.jakejmattson.kutils.api.annotations.Data
+import me.jakejmattson.discordkt.api.dsl.Data
 
 data class Raffle (
     val ChannelId: String,
@@ -8,5 +8,4 @@ data class Raffle (
     val Reaction: String
 )
 
-@Data("data/raffles.json")
-data class RaffleEntries(val raffles: MutableList<Raffle> = mutableListOf())
+data class RaffleEntries(val raffles: MutableList<Raffle> = mutableListOf()) : Data("data/raffles.json")
