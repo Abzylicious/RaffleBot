@@ -9,15 +9,6 @@ import me.jakejmattson.discordkt.api.annotations.Service
 
 @Service
 class LoggingService(config: BotConfiguration, messages: Messages) {
-    /*init {
-        runBlocking {
-            if (config.loggingChannel.isValidChannelId())
-                log(config.loggingChannel, messages.STARTUP_LOG)
-
-            log(config.loggingChannel, messages.STARTUP_LOG)
-        }
-    }*/
-
     suspend fun log(logChannelId: String, message: String) {
         if (!logChannelId.isValidChannelId()) return
         val loggingChannel = logChannelId.toTextChannel()
