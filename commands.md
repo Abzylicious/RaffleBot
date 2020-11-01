@@ -1,18 +1,18 @@
 # Commands
 
-## Key
-| Symbol     | Meaning                    |
-| ---------- | -------------------------- |
-| (Argument) | This argument is optional. |
+## Key 
+| Symbol      | Meaning                        |
+| ----------- | ------------------------------ |
+| (Argument)  | Argument is not required.      |
 
 ## Raffle
-| Commands | Arguments                               | Description                    |
-| -------- | --------------------------------------- | ------------------------------ |
-| Convert  | Message, (Guild Emote \| Unicode Emote) | Converts a message to a raffle |
+| Commands | Arguments                       | Description                    |
+| -------- | ------------------------------- | ------------------------------ |
+| Convert  | Message, (Guild Emoji \| Emoji) | Converts a message to a raffle |
 
 ## Utility
 | Commands | Arguments | Description                 |
 | -------- | --------- | --------------------------- |
 | Help     | (Command) | Display a help menu.        |
-| Ping     | <none>    | Check the status of the bot |
+| Ping     |           | Check the status of the bot |
 

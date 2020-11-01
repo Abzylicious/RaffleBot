@@ -18,6 +18,7 @@
         <kotlin.code.style>official</kotlin.code.style>
         <discordkt.version>0.21.2</discordkt.version>
         <junit.version>4.13.1</junit.version>
+        <kotlinx.version>1.4.0</kotlinx.version>
         <mockk.version>1.10.0</mockk.version>
     </properties>
 
@@ -43,6 +44,11 @@
             <groupId>me.jakejmattson</groupId>
             <artifactId>DiscordKt</artifactId>
             <version>${discordkt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-coroutines-core</artifactId>
+            <version>${kotlinx.version}</version>
         </dependency>
         <dependency>
             <groupId>io.mockk</groupId>
