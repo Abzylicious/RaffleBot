@@ -1,5 +1,6 @@
 package me.abzylicious.rafflebot
 
+import com.gitlab.kordlib.gateway.Intent
 import me.abzylicious.rafflebot.configuration.BotConfiguration
 import me.abzylicious.rafflebot.configuration.Messages
 import me.abzylicious.rafflebot.services.LoggingService
@@ -15,6 +16,10 @@ suspend fun main(args: Array<String>) {
         prefix {
             val configuration = discord.getInjectionObjects(BotConfiguration::class)
             configuration.prefix
+        }
+
+        intents {
+            +Intent.GuildMessages
         }
 
         onStart {
