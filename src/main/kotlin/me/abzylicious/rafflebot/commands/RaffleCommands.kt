@@ -2,32 +2,29 @@ package me.abzylicious.rafflebot.commands
 
 import me.abzylicious.rafflebot.configuration.BotConfiguration
 import me.abzylicious.rafflebot.configuration.Messages
-import me.abzylicious.rafflebot.extensions.jda.addReaction
+import me.abzylicious.rafflebot.extensions.kord.addReaction
 import me.abzylicious.rafflebot.services.RaffleService
-import me.jakejmattson.kutils.api.annotations.CommandSet
-import me.jakejmattson.kutils.api.arguments.EitherArg
-import me.jakejmattson.kutils.api.arguments.GuildEmoteArg
-import me.jakejmattson.kutils.api.arguments.MessageArg
-import me.jakejmattson.kutils.api.arguments.UnicodeEmoteArg
-import me.jakejmattson.kutils.api.dsl.command.commands
+import me.jakejmattson.discordkt.api.arguments.EitherArg
+import me.jakejmattson.discordkt.api.arguments.GuildEmojiArg
+import me.jakejmattson.discordkt.api.arguments.MessageArg
+import me.jakejmattson.discordkt.api.arguments.UnicodeEmojiArg
+import me.jakejmattson.discordkt.api.dsl.commands
 
-@CommandSet("Raffle")
-fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messages: Messages) = commands {
-    command("Convert") {
-        requiresGuild = true
+fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messages: Messages) = commands("Raffle") {
+    guildCommand("Convert") {
         description = "Converts a message to a raffle"
-        execute(MessageArg, EitherArg(GuildEmoteArg, UnicodeEmoteArg).makeNullableOptional()) {
-            val message = it.args.first
-            val channel = message.channel
-            val reaction = it.args.second?.getData({ emote -> emote.id }, { unicodeEmote -> unicodeEmote }) ?: config.defaultRaffleReaction
+        execute(MessageArg, EitherArg(GuildEmojiArg, UnicodeEmojiArg).makeNullableOptional()) {
+            val message = args.first
+            val channel = message.getChannel()
+            val reaction = args.second?.map({ emote -> emote.id.value }, { unicodeEmote -> unicodeEmote.unicode }) ?: config.defaultRaffleReaction
 
-            if (!raffleService.addRaffle(channel.id, message.id, reaction)) {
-                it.respond(messages.RAFFLE_EXISTS)
+            if (!raffleService.addRaffle(channel.id.value, message.id.value, reaction)) {
+                respond(messages.RAFFLE_EXISTS)
                 return@execute
             }
 
-            channel.addReaction(message.id, reaction)
-            it.respond(messages.MESSAGE_CONVERT_SUCCESS)
+            channel.addReaction(message.id.value, reaction)
+            respond(messages.MESSAGE_CONVERT_SUCCESS)
         }
     }
 }

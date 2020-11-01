@@ -2,22 +2,25 @@ package me.abzylicious.rafflebot
 
 import me.abzylicious.rafflebot.configuration.BotConfiguration
 import me.abzylicious.rafflebot.configuration.Messages
-import me.jakejmattson.kutils.api.dsl.configuration.startBot
-import kotlin.system.exitProcess
+import me.abzylicious.rafflebot.services.LoggingService
+import me.jakejmattson.discordkt.api.dsl.bot
 
-fun main(args: Array<String>) {
+suspend fun main(args: Array<String>) {
     val messages = Messages()
     val token = args.firstOrNull()
 
-    if (token == null) {
-        println(messages.NO_TOKEN_PROVIDED)
-        exitProcess(-1)
-    }
+    require(token != null) { messages.NO_TOKEN_PROVIDED }
 
-    startBot(token) {
-        val configuration: BotConfiguration = discord.getInjectionObjects(BotConfiguration::class)
-        configure {
-            prefix { configuration.prefix }
+    bot(token) {
+        prefix {
+            val configuration = discord.getInjectionObjects(BotConfiguration::class)
+            configuration.prefix
+        }
+
+        onStart {
+            val logger = this.getInjectionObjects(LoggingService::class)
+            val configuration = this.getInjectionObjects(BotConfiguration::class)
+            logger.log(configuration.loggingChannel, messages.STARTUP_LOG)
         }
     }
 }
