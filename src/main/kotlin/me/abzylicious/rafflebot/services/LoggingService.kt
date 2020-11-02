@@ -1,6 +1,5 @@
 package me.abzylicious.rafflebot.services
 
-import kotlinx.coroutines.runBlocking
 import me.abzylicious.rafflebot.configuration.BotConfiguration
 import me.abzylicious.rafflebot.configuration.Messages
 import me.abzylicious.rafflebot.extensions.stdlib.isValidChannelId
