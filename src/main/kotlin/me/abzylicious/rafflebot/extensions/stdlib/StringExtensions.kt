@@ -13,10 +13,11 @@ private val emojiRegex = "[^\\x00-\\x7F]+ *(?:[^\\x00-\\x7F]| )*".toRegex()
 @Service
 class ApiInitializer(discord: Discord) { init { api = discord.api } }
 
-suspend fun String.toTextChannel() = try { api.getChannelOf<TextChannel>(this.toSnowflake()) } catch (e: Exception) { null }
+suspend fun String.toTextChannel() = try { api.getChannelOf<TextChannel>(toSnowflake()) } catch (e: Exception) { null }
 suspend fun String.isValidChannelId() = this.toTextChannel() != null
 
-suspend fun String.toGuildEmote() = try { api.guilds.first().getEmoji(this.toSnowflake()) } catch (e: Exception) { null }
+suspend fun String.toGuildEmote() = try { api.guilds.first().getEmoji(toSnowflake()) } catch (e: Exception) { null }
 suspend fun String.isGuildEmote() = this.toGuildEmote() != null
 
 fun String.isEmoji() = this.matches(emojiRegex)
+suspend fun String.toDisplayableEmote() = if (isGuildEmote()) toGuildEmote()!!.mention else this

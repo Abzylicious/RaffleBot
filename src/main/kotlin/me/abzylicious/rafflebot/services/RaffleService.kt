@@ -20,10 +20,11 @@ class RaffleService(discord: Discord) {
     private val randomizer: Randomizer<User> = Randomizer()
 
     fun raffleExists(messageId: String) = repository.exists(messageId)
+    fun getRaffles() = repository.getAll()
 
-    fun addRaffle(channelId: String, messageId: String, reaction: String) {
+    fun addRaffle(messageId: String, channelId: String, reaction: String, messageUrl: String) {
         if (!raffleExists(messageId))
-            repository.add(Raffle(channelId, messageId, reaction))
+            repository.add(Raffle(messageId, channelId, reaction, messageUrl))
     }
 
     fun removeRaffle(messageId: String) = repository.remove(messageId)
