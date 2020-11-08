@@ -5,6 +5,9 @@ import java.security.SecureRandom
 class Randomizer<T>(private val randomizer: SecureRandom = SecureRandom()) {
 
     fun selectRandom(pool: List<T>, drawCount: Int = 1): List<T> {
+        if (pool.isEmpty())
+            return emptyList()
+        
         if (drawCount <= 0 || drawCount > pool.size)
             return emptyList()
 
