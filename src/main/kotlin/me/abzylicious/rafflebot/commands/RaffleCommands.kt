@@ -18,7 +18,7 @@ fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messa
             if (raffles.isEmpty()) {
                 respond {
                     title = "Raffles"
-                    description = "Currently there are no active raffles"
+                    description = "There are no active raffles currently"
                     thumbnail { url = discord.api.getSelf().avatar.url }
                 }
 
@@ -31,7 +31,7 @@ fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messa
                 thumbnail { url = discord.api.getSelf().avatar.url }
                 for (raffle in raffles) {
                     addInlineField("Raffle Id (MessageId)", raffle.MessageId)
-                    addInlineField("Message", raffle.MessageUrl)
+                    addInlineField("Message", "[Jump to](${raffle.MessageUrl})")
                     addInlineField("Reaction", raffle.Reaction.toDisplayableEmote(guild.id.value))
                 }
             }
