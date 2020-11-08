@@ -22,9 +22,9 @@ class RaffleService(discord: Discord) {
     fun raffleExists(messageId: String) = repository.exists(messageId)
     fun getRaffles() = repository.getAll()
 
-    fun addRaffle(messageId: String, channelId: String, reaction: String, messageUrl: String) {
+    fun addRaffle(guildId: String, messageId: String, channelId: String, reaction: String, messageUrl: String) {
         if (!raffleExists(messageId))
-            repository.add(Raffle(messageId, channelId, reaction, messageUrl))
+            repository.add(Raffle(guildId, messageId, channelId, reaction, messageUrl))
     }
 
     fun removeRaffle(messageId: String) = repository.remove(messageId)

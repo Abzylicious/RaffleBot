@@ -41,16 +41,18 @@ fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messa
         description = "Converts a message to a raffle"
         execute(MessageArg, EitherArg(GuildEmojiArg, UnicodeEmojiArg).makeNullableOptional()) {
             val messageId = args.first.id.value
-            val messageUrl = args.first.jumpLink(guild.id.value)
-            val channelId = args.first.channelId.value
-            val reaction = args.second?.map({ emote -> emote.id.value }, { unicodeEmote -> unicodeEmote.unicode }) ?: config.defaultRaffleReaction
 
             if (raffleService.raffleExists(messageId)) {
                 respond(messages.RAFFLE_EXISTS)
                 return@execute
             }
 
-            raffleService.addRaffle(messageId, channelId, reaction, messageUrl)
+            val guildId = guild.id.value
+            val messageUrl = args.first.jumpLink(guild.id.value)
+            val channelId = args.first.channelId.value
+            val reaction = args.second?.map({ emote -> emote.id.value }, { unicodeEmote -> unicodeEmote.unicode }) ?: config.defaultRaffleReaction
+
+            raffleService.addRaffle(guildId, messageId, channelId, reaction, messageUrl)
             channel.addReaction(messageId, reaction)
             respond(messages.MESSAGE_CONVERT_SUCCESS)
         }
