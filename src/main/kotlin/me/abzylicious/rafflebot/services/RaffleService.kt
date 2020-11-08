@@ -11,7 +11,7 @@ import me.jakejmattson.discordkt.api.Discord
 import me.jakejmattson.discordkt.api.annotations.Service
 import me.jakejmattson.discordkt.api.extensions.toSnowflake
 
-data class Winner(val id: String, val name: String)
+data class Winner(val id: String, val name: String, val mention: String)
 
 @Service
 class RaffleService(discord: Discord) {
@@ -19,23 +19,22 @@ class RaffleService(discord: Discord) {
     private val repository: RaffleRepository = RaffleRepository(discord)
     private val randomizer: Randomizer<User> = Randomizer()
 
-    fun addRaffle(channelId: String, messageId: String, reaction: String): Boolean {
-        val exists = repository.exists(messageId)
-        if (!exists)
-            repository.add(Raffle(channelId, messageId, reaction))
+    fun raffleExists(messageId: String) = repository.exists(messageId)
 
-        return !exists
+    fun addRaffle(channelId: String, messageId: String, reaction: String) {
+        if (!raffleExists(messageId))
+            repository.add(Raffle(channelId, messageId, reaction))
     }
 
+    fun removeRaffle(messageId: String) = repository.remove(messageId)
+
     suspend fun resolveRaffle(messageId: String, winnerCount: Int = 1): List<Winner> {
-        val exists = repository.exists(messageId)
-        if (!exists)
+        if (!raffleExists(messageId))
             return listOf()
 
         val raffle = repository.get(messageId)!!
-        val participants = getRaffleParticipants(raffle).filter { !it.isBot!! }
-        val winnerPool = randomizer.selectRandom(participants, winnerCount)
-        return winnerPool.map { Winner(it.id.value, it.username) }
+        val participants = getRaffleParticipants(raffle).filter { it.isBot == null || it.isBot == false }
+        return randomizer.selectRandom(participants, winnerCount).map { Winner(it.id.value, it.tag, it.mention) }
     }
 
     private suspend fun getRaffleParticipants(raffle: Raffle): List<User> {
