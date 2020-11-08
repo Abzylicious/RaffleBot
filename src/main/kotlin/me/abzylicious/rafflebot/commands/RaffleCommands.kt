@@ -32,7 +32,7 @@ fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messa
                 for (raffle in raffles) {
                     addInlineField("Raffle Id (MessageId)", raffle.MessageId)
                     addInlineField("Message", raffle.MessageUrl)
-                    addInlineField("Reaction", raffle.Reaction.toDisplayableEmote())
+                    addInlineField("Reaction", raffle.Reaction.toDisplayableEmote(guild.id.value))
                 }
             }
         }
@@ -53,7 +53,7 @@ fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messa
             val reaction = args.second?.map({ emote -> emote.id.value }, { unicodeEmote -> unicodeEmote.unicode }) ?: config.defaultRaffleReaction
 
             raffleService.addRaffle(guildId, messageId, channelId, reaction, messageUrl)
-            channel.addReaction(messageId, reaction)
+            channel.addReaction(guildId, messageId, reaction)
             respond(messages.MESSAGE_CONVERT_SUCCESS)
         }
     }

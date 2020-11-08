@@ -15,9 +15,9 @@ private lateinit var api: Kord
 @Service
 class ApiInitializer(discord: Discord) { init { api = discord.api } }
 
-suspend fun MessageChannel.addReaction(messageId: String, reaction: String) {
-    if (reaction.isGuildEmote())
-        this.getMessage(messageId.toSnowflake()).addReaction(reaction.toGuildEmote()!!)
+suspend fun MessageChannel.addReaction(guildId: String, messageId: String, reaction: String) {
+    if (reaction.isGuildEmote(guildId))
+        this.getMessage(messageId.toSnowflake()).addReaction(reaction.toGuildEmote(guildId)!!)
 
     if (reaction.isEmoji())
         this.getMessage(messageId.toSnowflake()).addReaction(ReactionEmoji.Unicode(reaction))
