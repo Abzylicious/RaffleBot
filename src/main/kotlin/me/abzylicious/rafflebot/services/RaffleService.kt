@@ -41,6 +41,6 @@ class RaffleService(discord: Discord) {
         val channel = raffle.ChannelId.toTextChannel() ?: return emptyList()
         val message = channel.getMessage(raffle.MessageId.toSnowflake())
         val reaction = message.getReaction(raffle.Reaction)
-        return message.getReactors(reaction).toList()
+        return if (reaction != null) message.getReactors(reaction).toList() else listOf()
     }
 }
