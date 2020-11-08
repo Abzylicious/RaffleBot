@@ -10,6 +10,7 @@
 | -------- | ------------------------------- | ------------------------------ |
 | Convert  | Message, (Guild Emoji \| Emoji) | Converts a message to a raffle |
 | End      | Message, (Integer)              | End a given raffle             |
+| Remove   | Message                         | Remove a given raffle          |
 
 ## Utility
 | Commands | Arguments | Description                 |

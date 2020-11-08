@@ -25,10 +25,9 @@ fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messa
             respond(messages.MESSAGE_CONVERT_SUCCESS)
         }
     }
-    guildCommand("End"){
+    guildCommand("End") {
         description = "End a given raffle"
-        execute(MessageArg, IntegerArg.makeOptional(1))
-        {
+        execute(MessageArg, IntegerArg.makeOptional(1)) {
             val messageId = args.first.id.value
             val winnerCount = args.second
 
@@ -49,6 +48,20 @@ fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messa
             }
 
             raffleService.removeRaffle(messageId)
+        }
+    }
+    guildCommand("Remove") {
+        description = "Remove a given raffle"
+        execute(MessageArg) {
+            val messageId = args.first.id.value
+
+            if (!raffleService.raffleExists(messageId)) {
+                respond(messages.RAFFLE_NOT_FOUND)
+                return@execute
+            }
+
+            raffleService.removeRaffle(messageId)
+            respond(messages.RAFFLE_REMOVED)
         }
     }
 }

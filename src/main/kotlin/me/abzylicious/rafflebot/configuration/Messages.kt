@@ -7,6 +7,7 @@ data class Messages(
     val STARTUP_LOG: String = "Bot successfully initialized!",
     val RAFFLE_EXISTS: String = "This raffle already exists",
     val RAFFLE_NOT_FOUND: String = "Raffle not found",
+    val RAFFLE_REMOVED: String = "Raffle successfully removed",
     val NO_WINNER_AVAILABLE: String = "No one participated in this raffle or you tried to draw more winners than there are participants",
     val MESSAGE_CONVERT_SUCCESS: String = "Message successfully converted and under my watch now",
     val CONGRATULATION: String = "Congratulations to the following winner(s)!"
