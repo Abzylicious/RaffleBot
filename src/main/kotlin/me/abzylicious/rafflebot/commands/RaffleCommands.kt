@@ -14,7 +14,7 @@ fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messa
     guildCommand("List") {
         description = "Lists all active raffles"
         execute {
-            val raffles = raffleService.getRaffles()
+            val raffles = raffleService.getRaffles(guild.id.value)
             if (raffles.isEmpty()) {
                 respond {
                     title = "Raffles"
@@ -40,14 +40,14 @@ fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messa
     guildCommand("Convert") {
         description = "Converts a message to a raffle"
         execute(MessageArg, EitherArg(GuildEmojiArg, UnicodeEmojiArg).makeNullableOptional()) {
+            val guildId = guild.id.value
             val messageId = args.first.id.value
 
-            if (raffleService.raffleExists(messageId)) {
+            if (raffleService.raffleExists(guildId, messageId)) {
                 respond(messages.RAFFLE_EXISTS)
                 return@execute
             }
 
-            val guildId = guild.id.value
             val messageUrl = args.first.jumpLink(guild.id.value)
             val channelId = args.first.channelId.value
             val reaction = args.second?.map({ emote -> emote.id.value }, { unicodeEmote -> unicodeEmote.unicode }) ?: config.defaultRaffleReaction
@@ -60,15 +60,16 @@ fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messa
     guildCommand("End") {
         description = "End a given raffle"
         execute(MessageArg, IntegerArg.makeOptional(1)) {
+            val guildId = guild.id.value
             val messageId = args.first.id.value
             val winnerCount = args.second
 
-            if (!raffleService.raffleExists(messageId)) {
+            if (!raffleService.raffleExists(guildId, messageId)) {
                 respond(messages.RAFFLE_NOT_FOUND)
                 return@execute
             }
 
-            val winners = raffleService.resolveRaffle(messageId, winnerCount)
+            val winners = raffleService.resolveRaffle(guildId, messageId, winnerCount)
             if (winners.isEmpty()) {
                 respond(messages.NO_WINNER_AVAILABLE)
                 return@execute
@@ -79,20 +80,21 @@ fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messa
                 respond("${winner.mention} (${winner.name} :: ${winner.id})")
             }
 
-            raffleService.removeRaffle(messageId)
+            raffleService.removeRaffle(guildId, messageId)
         }
     }
     guildCommand("Remove") {
         description = "Remove a given raffle"
         execute(MessageArg) {
+            val guildId = guild.id.value
             val messageId = args.first.id.value
 
-            if (!raffleService.raffleExists(messageId)) {
+            if (!raffleService.raffleExists(guildId, messageId)) {
                 respond(messages.RAFFLE_NOT_FOUND)
                 return@execute
             }
 
-            raffleService.removeRaffle(messageId)
+            raffleService.removeRaffle(guildId, messageId)
             respond(messages.RAFFLE_REMOVED)
         }
     }

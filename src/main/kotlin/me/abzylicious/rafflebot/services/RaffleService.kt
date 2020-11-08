@@ -19,21 +19,21 @@ class RaffleService(discord: Discord) {
     private val repository: RaffleRepository = RaffleRepository(discord)
     private val randomizer: Randomizer<User> = Randomizer()
 
-    fun raffleExists(messageId: String) = repository.exists(messageId)
-    fun getRaffles() = repository.getAll()
+    fun raffleExists(guildId: String, messageId: String) = repository.exists(guildId, messageId)
+    fun getRaffles(guildId: String) = repository.getAll(guildId)
 
     fun addRaffle(guildId: String, messageId: String, channelId: String, reaction: String, messageUrl: String) {
-        if (!raffleExists(messageId))
+        if (!raffleExists(guildId, messageId))
             repository.add(Raffle(guildId, messageId, channelId, reaction, messageUrl))
     }
 
-    fun removeRaffle(messageId: String) = repository.remove(messageId)
+    fun removeRaffle(guildId: String, messageId: String) = repository.remove(guildId, messageId)
 
-    suspend fun resolveRaffle(messageId: String, winnerCount: Int = 1): List<Winner> {
-        if (!raffleExists(messageId))
+    suspend fun resolveRaffle(guildId: String, messageId: String, winnerCount: Int = 1): List<Winner> {
+        if (!raffleExists(guildId, messageId))
             return listOf()
 
-        val raffle = repository.get(messageId)!!
+        val raffle = repository.get(guildId, messageId)!!
         val participants = getRaffleParticipants(raffle).filter { it.isBot == null || it.isBot == false }
         return randomizer.selectRandom(participants, winnerCount).map { Winner(it.id.value, it.tag, it.mention) }
     }
