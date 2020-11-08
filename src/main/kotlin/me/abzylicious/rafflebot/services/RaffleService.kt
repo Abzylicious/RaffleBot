@@ -19,6 +19,7 @@ class RaffleService(discord: Discord) {
     private val repository: RaffleRepository = RaffleRepository(discord)
     private val randomizer: Randomizer<User> = Randomizer()
 
+    fun rafflesExist(guildId: String) = repository.exists(guildId)
     fun raffleExists(guildId: String, messageId: String) = repository.exists(guildId, messageId)
     fun getRaffles(guildId: String) = repository.getAll(guildId)
 
@@ -28,6 +29,7 @@ class RaffleService(discord: Discord) {
     }
 
     fun removeRaffle(guildId: String, messageId: String) = repository.remove(guildId, messageId)
+    fun clearRaffles(guildId: String) = repository.clear(guildId)
 
     suspend fun resolveRaffle(guildId: String, messageId: String, winnerCount: Int = 1): List<Winner> {
         if (!raffleExists(guildId, messageId))

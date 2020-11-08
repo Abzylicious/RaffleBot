@@ -98,4 +98,18 @@ fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messa
             respond(messages.RAFFLE_REMOVED)
         }
     }
+    guildCommand("Clear") {
+        description = "Remove all raffles"
+        execute {
+            val guildId = guild.id.value
+
+            if (!raffleService.rafflesExist(guildId)) {
+                respond(messages.NO_RAFFLES_AVAILABLE)
+                return@execute
+            }
+
+            raffleService.clearRaffles(guildId)
+            respond(messages.RAFFLES_CLEARED)
+        }
+    }
 }

@@ -22,5 +22,11 @@ class RaffleRepository(private val discord: Discord) {
             saveRaffles()
     }
 
+    fun clear(guildId: String) {
+        if (raffleEntries.raffles.removeIf {it.GuildId == guildId })
+            saveRaffles()
+    }
+
+    fun exists(guildId: String) = raffleEntries.raffles.any { it.GuildId == guildId }
     fun exists(guildId: String, messageId: String) = raffleEntries.raffles.any { it.GuildId == guildId && it.MessageId == messageId }
 }

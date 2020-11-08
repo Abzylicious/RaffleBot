@@ -8,6 +8,7 @@
 ## Raffle
 | Commands | Arguments                       | Description                    |
 | -------- | ------------------------------- | ------------------------------ |
+| Clear    |                                 | Remove all raffles             |
 | Convert  | Message, (Guild Emoji \| Emoji) | Converts a message to a raffle |
 | End      | Message, (Integer)              | End a given raffle             |
 | List     |                                 | Lists all active raffles       |
