@@ -2,5 +2,6 @@
   "author": "${project.author}",
   "version": "${version}",
   "discordkt": "${discordkt.version}",
+  "kotlin": "${kotlin.version}",
   "repository": "${project.repository}"
 }
