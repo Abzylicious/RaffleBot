@@ -19,6 +19,7 @@ fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messa
                 respond {
                     title = "Raffles"
                     description = "There are no active raffles currently"
+                    color = discord.configuration.theme
                     thumbnail { url = discord.api.getSelf().avatar.url }
                 }
 
@@ -28,6 +29,7 @@ fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messa
             respond {
                 title = "Raffles"
                 description = "Currently active raffles"
+                color = discord.configuration.theme
                 thumbnail { url = discord.api.getSelf().avatar.url }
                 for (raffle in raffles) {
                     addInlineField("Raffle Id (MessageId)", raffle.MessageId)
