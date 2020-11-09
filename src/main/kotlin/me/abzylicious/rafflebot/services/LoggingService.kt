@@ -7,7 +7,7 @@ import me.abzylicious.rafflebot.extensions.stdlib.toTextChannel
 import me.jakejmattson.discordkt.api.annotations.Service
 
 @Service
-class LoggingService(config: BotConfiguration, messages: Messages) {
+class LoggingService(private val config: BotConfiguration, private val messages: Messages) {
     suspend fun log(logChannelId: String, message: String) {
         if (!logChannelId.isValidChannelId()) return
         val loggingChannel = logChannelId.toTextChannel()

@@ -44,11 +44,12 @@ suspend fun main(args: Array<String>) {
             color = it.discord.configuration.theme
             thumbnail { url = self.avatar.url }
 
-            title = self.username
+            title = self.tag
             description = "A multi-guild discord bot to host all the giveaways you could ever want"
 
+            addInlineField("Author", project.author)
+            addInlineField("Source", "[GitHub](${project.repository})")
             addInlineField("Prefix", configuration.prefix)
-            addInlineField("Ping", botStats.ping)
 
             field {
                 name = "Build Info"
@@ -58,9 +59,9 @@ suspend fun main(args: Array<String>) {
                         "Kotlin: ${project.kotlin}\n" +
                         "```"
             }
-            addInlineField("Author", project.author)
-            addInlineField("Source", "[GitHub](${project.repository})")
-            addField("Uptime", botStats.uptime)
+
+            addInlineField("Uptime", botStats.uptime)
+            addInlineField("Ping", botStats.ping)
         }
 
         onStart {
