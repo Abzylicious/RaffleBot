@@ -24,7 +24,7 @@ suspend fun main(args: Array<String>) {
     bot(token) {
         prefix {
             val configuration = discord.getInjectionObjects(Configuration::class)
-            configuration.prefix
+            guild?.let { configuration[it.id.value]?.prefix } ?: configuration.prefix
         }
 
         configure {
@@ -36,7 +36,6 @@ suspend fun main(args: Array<String>) {
         }
 
         mentionEmbed {
-            val configuration = it.discord.getInjectionObjects(Configuration::class)
             val botStats = it.discord.getInjectionObjects(BotStatsService::class)
             val self = it.discord.api.getSelf()
 
@@ -48,7 +47,7 @@ suspend fun main(args: Array<String>) {
 
             addInlineField("Author", project.author)
             addInlineField("Source", "[GitHub](${project.repository})")
-            addInlineField("Prefix", configuration.prefix)
+            addInlineField("Prefix", it.prefix())
 
             field {
                 name = "Build Info"
@@ -66,7 +65,7 @@ suspend fun main(args: Array<String>) {
         onStart {
             val logger = this.getInjectionObjects(LoggingService::class)
             val configuration = this.getInjectionObjects(Configuration::class)
-            logger.log(configuration.loggingChannel, messages.STARTUP_LOG)
+            configuration.guildConfigurations.forEach { logger.log(it.value.loggingChannel, messages.STARTUP_LOG) }
         }
     }
 }
