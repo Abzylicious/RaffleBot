@@ -2,12 +2,11 @@ package me.abzylicious.rafflebot
 
 import com.gitlab.kordlib.gateway.Intent
 import com.google.gson.Gson
-import me.abzylicious.rafflebot.configuration.BotConfiguration
+import me.abzylicious.rafflebot.configuration.Configuration
 import me.abzylicious.rafflebot.configuration.Messages
 import me.abzylicious.rafflebot.services.BotStatsService
 import me.abzylicious.rafflebot.services.LoggingService
 import me.jakejmattson.discordkt.api.dsl.bot
-import me.jakejmattson.discordkt.api.extensions.addField
 import me.jakejmattson.discordkt.api.extensions.addInlineField
 import java.awt.Color
 
@@ -24,7 +23,7 @@ suspend fun main(args: Array<String>) {
 
     bot(token) {
         prefix {
-            val configuration = discord.getInjectionObjects(BotConfiguration::class)
+            val configuration = discord.getInjectionObjects(Configuration::class)
             configuration.prefix
         }
 
@@ -37,7 +36,7 @@ suspend fun main(args: Array<String>) {
         }
 
         mentionEmbed {
-            val configuration = it.discord.getInjectionObjects(BotConfiguration::class)
+            val configuration = it.discord.getInjectionObjects(Configuration::class)
             val botStats = it.discord.getInjectionObjects(BotStatsService::class)
             val self = it.discord.api.getSelf()
 
@@ -66,7 +65,7 @@ suspend fun main(args: Array<String>) {
 
         onStart {
             val logger = this.getInjectionObjects(LoggingService::class)
-            val configuration = this.getInjectionObjects(BotConfiguration::class)
+            val configuration = this.getInjectionObjects(Configuration::class)
             logger.log(configuration.loggingChannel, messages.STARTUP_LOG)
         }
     }

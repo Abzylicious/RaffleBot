@@ -1,6 +1,6 @@
 package me.abzylicious.rafflebot.commands
 
-import me.abzylicious.rafflebot.configuration.BotConfiguration
+import me.abzylicious.rafflebot.configuration.Configuration
 import me.abzylicious.rafflebot.configuration.Messages
 import me.abzylicious.rafflebot.extensions.kord.addReaction
 import me.abzylicious.rafflebot.extensions.kord.jumpLink
@@ -10,7 +10,7 @@ import me.jakejmattson.discordkt.api.arguments.*
 import me.jakejmattson.discordkt.api.dsl.commands
 import me.jakejmattson.discordkt.api.extensions.addInlineField
 
-fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messages: Messages) = commands("Raffle") {
+fun raffleCommands(configuration: Configuration, raffleService: RaffleService, messages: Messages) = commands("Raffle") {
     guildCommand("List") {
         description = "Lists all active raffles"
         execute {
@@ -52,7 +52,7 @@ fun raffleCommands(config: BotConfiguration, raffleService: RaffleService, messa
 
             val messageUrl = args.first.jumpLink(guild.id.value)
             val channelId = args.first.channelId.value
-            val reaction = args.second?.map({ emote -> emote.id.value }, { unicodeEmote -> unicodeEmote.unicode }) ?: config.defaultRaffleReaction
+            val reaction = args.second?.map({ emote -> emote.id.value }, { unicodeEmote -> unicodeEmote.unicode }) ?: configuration.defaultRaffleReaction
 
             raffleService.addRaffle(guildId, messageId, channelId, reaction, messageUrl)
             channel.addReaction(guildId, messageId, reaction)
