@@ -16,7 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.4.10</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
-        <discordkt.version>0.21.2</discordkt.version>
+        <discordkt.version>0.21.3</discordkt.version>
         <junit.version>4.13.1</junit.version>
         <kotlinx.version>1.4.0</kotlinx.version>
         <mockk.version>1.10.0</mockk.version>
