@@ -11,4 +11,4 @@ fun Message.getReaction(reaction: String): ReactionEmoji? {
     return if (optionalReaction.isPresent) optionalReaction.get().emoji else null
 }
 
-fun Message.jumpLink(guildId: String) = "https://discord.com/channels/${guildId}/${channel.id.value}/${id.value}"
+fun Message.jumpLink(guildId: Long) = "https://discord.com/channels/${guildId}/${channel.id.value}/${id.value}"

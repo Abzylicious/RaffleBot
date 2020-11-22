@@ -6,18 +6,17 @@ import me.abzylicious.rafflebot.embeds.createRaffleListEmbed
 import me.abzylicious.rafflebot.extensions.discordkt.getEmoteIdOrValue
 import me.abzylicious.rafflebot.extensions.kord.addReaction
 import me.abzylicious.rafflebot.extensions.kord.jumpLink
-import me.abzylicious.rafflebot.extensions.stdlib.toDisplayableEmote
 import me.abzylicious.rafflebot.services.RaffleService
 import me.jakejmattson.discordkt.api.arguments.*
 import me.jakejmattson.discordkt.api.dsl.commands
-import me.jakejmattson.discordkt.api.extensions.addInlineField
 
 fun raffleCommands(configuration: Configuration, raffleService: RaffleService, messages: Messages) = commands("Raffle") {
     guildCommand("List") {
         description = "Lists all active raffles"
         execute {
-            val raffles = raffleService.getRaffles(guild.id.longValue)
-            respond { createRaffleListEmbed(discord, raffles, guild.id.longValue) }
+            val guildId = guild.id.longValue
+            val raffles = raffleService.getRaffles(guildId)
+            respond { createRaffleListEmbed(discord, raffles, guildId) }
         }
     }
     guildCommand("Convert") {
@@ -31,7 +30,7 @@ fun raffleCommands(configuration: Configuration, raffleService: RaffleService, m
                 return@execute
             }
 
-            val messageUrl = args.first.jumpLink(guildId.toString())
+            val messageUrl = args.first.jumpLink(guildId)
             val channelId = args.first.channelId.longValue
             val reaction = args.second?.getEmoteIdOrValue() ?: configuration.defaultRaffleReaction
 
