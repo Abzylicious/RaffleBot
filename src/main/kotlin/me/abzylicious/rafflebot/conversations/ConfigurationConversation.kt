@@ -9,7 +9,7 @@ import me.jakejmattson.discordkt.api.dsl.conversation
 
 class ConfigurationConversation(private val configuration: Configuration, private val messages: Messages) {
     suspend fun createConfigurationConversation(guildId: Long) = conversation {
-        val prefix = promptEmbed(EveryArg.makeOptional(configuration.prefix)) {
+        val prefix = promptEmbed(EveryArg) {
             createConfigurationMessageEmbed(discord, "Setup - Prefix", messages.SETUP_PREFIX)
         }
 
@@ -25,11 +25,11 @@ class ConfigurationConversation(private val configuration: Configuration, privat
             createConfigurationMessageEmbed(discord, "Setup - Logging Channel", messages.SETUP_LOGGING_CHANNEL)
         }
 
-        val defaultRaffleReactionArg = promptEmbed(EitherArg(GuildEmojiArg, UnicodeEmojiArg).makeNullableOptional()) {
+        val defaultRaffleReactionArg = promptEmbed(EitherArg(GuildEmojiArg, UnicodeEmojiArg)) {
             createConfigurationMessageEmbed(discord, "Setup - Default Raffle Reaction", messages.SETUP_DEFAULT_RAFFLE_REACTION)
         }
 
-        val defaultRaffleReaction = defaultRaffleReactionArg?.getEmoteIdOrValue() ?: configuration.defaultRaffleReaction
+        val defaultRaffleReaction = defaultRaffleReactionArg.getEmoteIdOrValue()
         configuration.setup(guildId, prefix, adminRole.id.longValue, staffRole.id.longValue, loggingChannel.id.longValue, defaultRaffleReaction)
     }
 }

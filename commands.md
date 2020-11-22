@@ -5,6 +5,11 @@
 | ----------- | ------------------------------ |
 | (Argument)  | Argument is not required.      |
 
+## Configuration
+| Commands  | Arguments | Description                       |
+| --------- | --------- | --------------------------------- |
+| configure |           | Configure a guild to use this bot |
+
 ## Raffle
 | Commands | Arguments                       | Description                    |
 | -------- | ------------------------------- | ------------------------------ |
