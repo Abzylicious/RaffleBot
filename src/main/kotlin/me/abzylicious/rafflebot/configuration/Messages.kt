@@ -10,7 +10,7 @@ data class Messages(
     val SETUP_ADMIN_ROLE: String = "Set the bot admin role for this guild. This can be changed later via the **setadminrole** command.",
     val SETUP_STAFF_ROLE: String = "Set the bot staff role for this guild. This can be changed later via the **setstaffrole** command.",
     val SETUP_LOGGING_CHANNEL: String = "Set the bot logging channel. This can be changed later via the **setloggingchannel** command.",
-    val SETUP_DEFAULT_RAFFLE_REACTION: String = "Set the default reaction for raffles of this guild. This can be changed later via the **setdefaultrafflereaction** command.",
+    val SETUP_DEFAULT_RAFFLE_REACTION: String = "Set the default reaction for raffles of this guild. This can be changed later via the **setdefaultreaction** command.",
     val SETUP_COMPLETE: String = "setup complete! \uD83C\uDF89",
     val STARTUP_LOG: String = "Bot successfully initialized!",
     val MESSAGE_CONVERT_SUCCESS: String = "Message successfully converted and under my watch now",

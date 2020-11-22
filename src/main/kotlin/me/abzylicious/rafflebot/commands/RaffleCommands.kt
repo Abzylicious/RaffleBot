@@ -19,6 +19,7 @@ fun raffleCommands(configuration: Configuration, raffleService: RaffleService, m
             respond { createRaffleListEmbed(discord, raffles, guildId) }
         }
     }
+
     guildCommand("Convert") {
         description = "Converts a message to a raffle"
         execute(MessageArg, EitherArg(GuildEmojiArg, UnicodeEmojiArg).makeNullableOptional()) {
@@ -39,6 +40,7 @@ fun raffleCommands(configuration: Configuration, raffleService: RaffleService, m
             respond(messages.MESSAGE_CONVERT_SUCCESS)
         }
     }
+
     guildCommand("End") {
         description = "End a given raffle"
         execute(MessageArg, IntegerArg.makeOptional(1)) {
@@ -65,6 +67,7 @@ fun raffleCommands(configuration: Configuration, raffleService: RaffleService, m
             raffleService.removeRaffle(guildId, messageId)
         }
     }
+
     guildCommand("Remove") {
         description = "Remove a given raffle"
         execute(MessageArg) {
@@ -80,6 +83,7 @@ fun raffleCommands(configuration: Configuration, raffleService: RaffleService, m
             respond(messages.RAFFLE_REMOVED)
         }
     }
+
     guildCommand("Clear") {
         description = "Remove all raffles"
         execute {
