@@ -2,6 +2,7 @@ package me.abzylicious.rafflebot.commands
 
 import me.abzylicious.rafflebot.configuration.Configuration
 import me.abzylicious.rafflebot.configuration.Messages
+import me.abzylicious.rafflebot.extensions.discordkt.getEmoteIdOrValue
 import me.abzylicious.rafflebot.extensions.kord.addReaction
 import me.abzylicious.rafflebot.extensions.kord.jumpLink
 import me.abzylicious.rafflebot.extensions.stdlib.toDisplayableEmote
@@ -52,7 +53,7 @@ fun raffleCommands(configuration: Configuration, raffleService: RaffleService, m
 
             val messageUrl = args.first.jumpLink(guildId.toString())
             val channelId = args.first.channelId.longValue
-            val reaction = args.second?.map({ emote -> emote.id.value }, { unicodeEmote -> unicodeEmote.unicode }) ?: configuration.defaultRaffleReaction
+            val reaction = args.second?.getEmoteIdOrValue() ?: configuration.defaultRaffleReaction
 
             raffleService.addRaffle(guildId, messageId, channelId, reaction, messageUrl)
             channel.addReaction(guildId, messageId, reaction)

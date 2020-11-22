@@ -11,17 +11,17 @@ data class Configuration(
     operator fun get(id: Long) = guildConfigurations[id]
     fun hasGuildConfig(guildId: Long) = guildConfigurations.containsKey(guildId)
 
-    fun setup(guildId: Long, prefix: String?, adminRoleId: Long, staffRoleId: Long,
-              loggingChannel: Long, defaultRaffleReaction: String?) {
+    fun setup(guildId: Long, prefix: String, adminRoleId: Long, staffRoleId: Long,
+              loggingChannel: Long, defaultRaffleReaction: String) {
         if (guildConfigurations[guildId] != null) return
 
         val newGuildConfiguration = GuildConfiguration(
             guildId,
-            prefix ?: this.prefix,
+            prefix,
             adminRoleId,
             staffRoleId,
             loggingChannel,
-            defaultRaffleReaction ?: this.defaultRaffleReaction
+            defaultRaffleReaction
         )
         guildConfigurations[guildId] = newGuildConfiguration
         save()
