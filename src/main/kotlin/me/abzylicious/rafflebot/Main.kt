@@ -24,7 +24,7 @@ suspend fun main(args: Array<String>) {
     bot(token) {
         prefix {
             val configuration = discord.getInjectionObjects(Configuration::class)
-            guild?.let { configuration[it.id.value]?.prefix } ?: configuration.prefix
+            guild?.let { configuration[it.id.longValue]?.prefix } ?: configuration.prefix
         }
 
         configure {
