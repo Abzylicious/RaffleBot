@@ -2,6 +2,7 @@ package me.abzylicious.rafflebot.commands
 
 import me.abzylicious.rafflebot.configuration.Configuration
 import me.abzylicious.rafflebot.configuration.Messages
+import me.abzylicious.rafflebot.embeds.createRaffleListEmbed
 import me.abzylicious.rafflebot.extensions.discordkt.getEmoteIdOrValue
 import me.abzylicious.rafflebot.extensions.kord.addReaction
 import me.abzylicious.rafflebot.extensions.kord.jumpLink
@@ -16,28 +17,7 @@ fun raffleCommands(configuration: Configuration, raffleService: RaffleService, m
         description = "Lists all active raffles"
         execute {
             val raffles = raffleService.getRaffles(guild.id.longValue)
-            if (raffles.isEmpty()) {
-                respond {
-                    title = "Raffles"
-                    description = "There are no active raffles currently"
-                    color = discord.configuration.theme
-                    thumbnail { url = discord.api.getSelf().avatar.url }
-                }
-
-                return@execute
-            }
-
-            respond {
-                title = "Raffles"
-                description = "Currently active raffles"
-                color = discord.configuration.theme
-                thumbnail { url = discord.api.getSelf().avatar.url }
-                for (raffle in raffles) {
-                    addInlineField("Raffle Id (MessageId)", raffle.MessageId.toString())
-                    addInlineField("Message", "[Jump to](${raffle.MessageUrl})")
-                    addInlineField("Reaction", raffle.Reaction.toDisplayableEmote(guild.id.longValue))
-                }
-            }
+            respond { createRaffleListEmbed(discord, raffles, guild.id.longValue) }
         }
     }
     guildCommand("Convert") {
