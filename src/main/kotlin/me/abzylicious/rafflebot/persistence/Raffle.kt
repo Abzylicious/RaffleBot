@@ -3,9 +3,9 @@ package me.abzylicious.rafflebot.persistence
 import me.jakejmattson.discordkt.api.dsl.Data
 
 data class Raffle (
-    val GuildId: String,
-    val MessageId: String,
-    val ChannelId: String,
+    val GuildId: Long,
+    val MessageId: Long,
+    val ChannelId: Long,
     val Reaction: String,
     val MessageUrl: String,
 )

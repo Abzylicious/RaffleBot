@@ -13,11 +13,11 @@ private val emojiRegex = "[^\\x00-\\x7F]+ *(?:[^\\x00-\\x7F]| )*".toRegex()
 @Service
 class ApiInitializer(discord: Discord) { init { api = discord.api } }
 
-suspend fun String.toTextChannel() = try { api.getChannelOf<TextChannel>(toSnowflake()) } catch (e: Exception) { null }
-suspend fun String.isValidChannelId() = this.toTextChannel() != null
+suspend fun Long.toTextChannel() = try { api.getChannelOf<TextChannel>(toSnowflake()) } catch (e: Exception) { null }
+suspend fun Long.isValidChannelId() = this.toTextChannel() != null
 
-suspend fun String.toGuildEmote(guildId: String) = try { api.guilds.first { it.id.value == guildId }.getEmoji(toSnowflake()) } catch (e: Exception) { null }
-suspend fun String.isGuildEmote(guildId: String) = this.toGuildEmote(guildId) != null
+suspend fun String.toGuildEmote(guildId: Long) = try { api.guilds.first { it.id.longValue == guildId }.getEmoji(toSnowflake()) } catch (e: Exception) { null }
+suspend fun String.isGuildEmote(guildId: Long) = this.toGuildEmote(guildId) != null
 
 fun String.isEmoji() = this.matches(emojiRegex)
-suspend fun String.toDisplayableEmote(guildId: String) = if (isGuildEmote(guildId)) toGuildEmote(guildId)!!.mention else this
+suspend fun String.toDisplayableEmote(guildId: Long) = if (isGuildEmote(guildId)) toGuildEmote(guildId)!!.mention else this

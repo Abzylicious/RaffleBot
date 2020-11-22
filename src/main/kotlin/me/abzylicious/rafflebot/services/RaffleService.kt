@@ -19,19 +19,19 @@ class RaffleService(discord: Discord) {
     private val repository: RaffleRepository = RaffleRepository(discord)
     private val randomizer: Randomizer<User> = Randomizer()
 
-    fun rafflesExist(guildId: String) = repository.exists(guildId)
-    fun raffleExists(guildId: String, messageId: String) = repository.exists(guildId, messageId)
-    fun getRaffles(guildId: String) = repository.getAll(guildId)
+    fun rafflesExist(guildId: Long) = repository.exists(guildId)
+    fun raffleExists(guildId: Long, messageId: Long) = repository.exists(guildId, messageId)
+    fun getRaffles(guildId: Long) = repository.getAll(guildId)
 
-    fun addRaffle(guildId: String, messageId: String, channelId: String, reaction: String, messageUrl: String) {
+    fun addRaffle(guildId: Long, messageId: Long, channelId: Long, reaction: String, messageUrl: String) {
         if (!raffleExists(guildId, messageId))
             repository.add(Raffle(guildId, messageId, channelId, reaction, messageUrl))
     }
 
-    fun removeRaffle(guildId: String, messageId: String) = repository.remove(guildId, messageId)
-    fun clearRaffles(guildId: String) = repository.clear(guildId)
+    fun removeRaffle(guildId: Long, messageId: Long) = repository.remove(guildId, messageId)
+    fun clearRaffles(guildId: Long) = repository.clear(guildId)
 
-    suspend fun resolveRaffle(guildId: String, messageId: String, winnerCount: Int = 1): List<Winner> {
+    suspend fun resolveRaffle(guildId: Long, messageId: Long, winnerCount: Int = 1): List<Winner> {
         if (!raffleExists(guildId, messageId))
             return listOf()
 

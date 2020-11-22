@@ -6,7 +6,7 @@ import me.jakejmattson.discordkt.api.annotations.Service
 
 @Service
 class LoggingService {
-    suspend fun log(logChannelId: String, message: String) {
+    suspend fun log(logChannelId: Long, message: String) {
         if (!logChannelId.isValidChannelId()) return
         val loggingChannel = logChannelId.toTextChannel()
         loggingChannel!!.createMessage(message)

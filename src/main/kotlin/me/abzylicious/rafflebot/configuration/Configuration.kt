@@ -6,13 +6,13 @@ data class Configuration(
     val ownerId: String = "insert-owner-id",
     val prefix: String = "raffle!",
     val defaultRaffleReaction: String = "\uD83C\uDF89",
-    val guildConfigurations: MutableMap<String, GuildConfiguration> = mutableMapOf()
+    val guildConfigurations: MutableMap<Long, GuildConfiguration> = mutableMapOf()
 ) : Data("config/config.json") {
-    operator fun get(id: String) = guildConfigurations[id]
-    fun hasGuildConfig(guildId: String) = guildConfigurations.containsKey(guildId)
+    operator fun get(id: Long) = guildConfigurations[id]
+    fun hasGuildConfig(guildId: Long) = guildConfigurations.containsKey(guildId)
 
-    fun setup(guildId: String, prefix: String?, adminRoleId: String, staffRoleId: String,
-              loggingChannel: String, defaultRaffleReaction: String?) {
+    fun setup(guildId: Long, prefix: String, adminRoleId: Long, staffRoleId: Long,
+              loggingChannel: Long, defaultRaffleReaction: String?) {
         if (guildConfigurations[guildId] != null) return
 
         val newGuildConfiguration = GuildConfiguration(
@@ -29,10 +29,10 @@ data class Configuration(
 }
 
 data class GuildConfiguration(
-    val id: String,
+    val id: Long,
     var prefix: String = "raffle!",
-    var adminRole: String,
-    var staffRole: String,
-    var loggingChannel: String,
+    var adminRole: Long,
+    var staffRole: Long,
+    var loggingChannel: Long,
     var defaultRaffleReaction: String = "\uD83C\uDF89"
 )
