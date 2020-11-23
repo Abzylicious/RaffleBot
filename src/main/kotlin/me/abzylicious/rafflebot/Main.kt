@@ -7,6 +7,8 @@ import me.abzylicious.rafflebot.configuration.Messages
 import me.abzylicious.rafflebot.embeds.Project
 import me.abzylicious.rafflebot.embeds.createBotInformationEmbed
 import me.abzylicious.rafflebot.services.LoggingService
+import me.abzylicious.rafflebot.services.PermissionsService
+import me.abzylicious.rafflebot.services.requiredPermissionLevel
 import me.jakejmattson.discordkt.api.dsl.bot
 import java.awt.Color
 
@@ -41,6 +43,16 @@ suspend fun main(args: Array<String>) {
             val logger = this.getInjectionObjects(LoggingService::class)
             val configuration = this.getInjectionObjects(Configuration::class)
             configuration.guildConfigurations.forEach { logger.log(it.value.loggingChannel, messages.STARTUP_LOG) }
+        }
+
+        permissions {
+            val permissionsService = discord.getInjectionObjects(PermissionsService::class)
+            val permission = command.requiredPermissionLevel
+
+            if (guild != null)
+                permissionsService.hasClearance(guild!!, user, permission)
+            else
+                false
         }
     }
 }
