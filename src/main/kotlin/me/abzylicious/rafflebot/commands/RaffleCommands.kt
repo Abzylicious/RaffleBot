@@ -4,6 +4,7 @@ import me.abzylicious.rafflebot.configuration.Configuration
 import me.abzylicious.rafflebot.configuration.Messages
 import me.abzylicious.rafflebot.embeds.createRaffleListEmbed
 import me.abzylicious.rafflebot.extensions.discordkt.getEmoteIdOrValue
+import me.abzylicious.rafflebot.extensions.discordkt.log
 import me.abzylicious.rafflebot.extensions.kord.addReaction
 import me.abzylicious.rafflebot.extensions.kord.jumpLink
 import me.abzylicious.rafflebot.services.RaffleService
@@ -17,6 +18,7 @@ fun raffleCommands(configuration: Configuration, raffleService: RaffleService, m
             val guildId = guild.id.longValue
             val raffles = raffleService.getRaffles(guildId)
             respond { createRaffleListEmbed(discord, raffles, guildId) }
+            log(configuration, guildId, names)
         }
     }
 
@@ -38,6 +40,7 @@ fun raffleCommands(configuration: Configuration, raffleService: RaffleService, m
             raffleService.addRaffle(guildId, messageId, channelId, reaction, messageUrl)
             channel.addReaction(guildId, messageId, reaction)
             respond(messages.MESSAGE_CONVERT_SUCCESS)
+            log(configuration, guildId, names)
         }
     }
 
@@ -65,6 +68,7 @@ fun raffleCommands(configuration: Configuration, raffleService: RaffleService, m
             }
 
             raffleService.removeRaffle(guildId, messageId)
+            log(configuration, guildId, names)
         }
     }
 
@@ -81,6 +85,7 @@ fun raffleCommands(configuration: Configuration, raffleService: RaffleService, m
 
             raffleService.removeRaffle(guildId, messageId)
             respond(messages.RAFFLE_REMOVED)
+            log(configuration, guildId, names)
         }
     }
 
@@ -96,6 +101,7 @@ fun raffleCommands(configuration: Configuration, raffleService: RaffleService, m
 
             raffleService.clearRaffles(guildId)
             respond(messages.RAFFLES_CLEARED)
+            log(configuration, guildId, names)
         }
     }
 }
