@@ -5,7 +5,6 @@ import me.abzylicious.rafflebot.configuration.Messages
 import me.abzylicious.rafflebot.conversations.ConfigurationConversation
 import me.abzylicious.rafflebot.embeds.createConfigurationEmbed
 import me.abzylicious.rafflebot.extensions.discordkt.getEmoteIdOrValue
-import me.abzylicious.rafflebot.extensions.discordkt.log
 import me.abzylicious.rafflebot.extensions.stdlib.toDisplayableEmote
 import me.jakejmattson.discordkt.api.arguments.*
 import me.jakejmattson.discordkt.api.dsl.commands
@@ -22,7 +21,6 @@ fun configurationCommands(configuration: Configuration, messages: Messages) = co
 
             val guildConfiguration = configuration[guildId]!!
             respond { createConfigurationEmbed(discord, guild, guildConfiguration) }
-            log(configuration, guildId, names)
         }
     }
 
@@ -40,7 +38,6 @@ fun configurationCommands(configuration: Configuration, messages: Messages) = co
                 .startPublicly(discord, author, channel)
 
             respond("**${guild.name}** ${messages.SETUP_COMPLETE}")
-            log(configuration, guildId, names)
         }
     }
 
@@ -57,7 +54,6 @@ fun configurationCommands(configuration: Configuration, messages: Messages) = co
             configuration[guildId]?.prefix = prefix
             configuration.save()
             respond("Prefix set to **$prefix**")
-            log(configuration, guildId, names)
         }
     }
 
@@ -74,7 +70,6 @@ fun configurationCommands(configuration: Configuration, messages: Messages) = co
             configuration[guildId]?.adminRole = role.id.longValue
             configuration.save()
             respond("Role set to: **${role.name}**")
-            log(configuration, guildId, names)
         }
     }
 
@@ -91,7 +86,6 @@ fun configurationCommands(configuration: Configuration, messages: Messages) = co
             configuration[guild.id.longValue]?.staffRole = role.id.longValue
             configuration.save()
             respond("Role set to: **${role.name}**")
-            log(configuration, guildId, names)
         }
     }
 
@@ -108,7 +102,6 @@ fun configurationCommands(configuration: Configuration, messages: Messages) = co
             configuration[guild.id.longValue]?.loggingChannel = channel.id.longValue
             configuration.save()
             respond("Channel set to: **${channel.name}**")
-            log(configuration, guildId, names)
         }
     }
 
@@ -125,7 +118,6 @@ fun configurationCommands(configuration: Configuration, messages: Messages) = co
             configuration[guild.id.longValue]?.defaultRaffleReaction = reaction
             configuration.save()
             respond("Reaction set to: ${reaction.toDisplayableEmote(guildId)}")
-            log(configuration, guildId, names)
         }
     }
 }
