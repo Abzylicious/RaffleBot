@@ -14,7 +14,7 @@ import java.awt.Color
 
 suspend fun main(args: Array<String>) {
     val messages = Messages()
-    val token = args.firstOrNull()
+    val token = System.getenv("BOT_TOKEN") ?: null
 
     require(token != null) { messages.NO_TOKEN_PROVIDED }
 
