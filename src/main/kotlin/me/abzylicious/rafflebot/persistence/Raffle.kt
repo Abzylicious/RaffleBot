@@ -10,4 +10,4 @@ data class Raffle (
     val MessageUrl: String,
 )
 
-data class RaffleEntries(val raffles: MutableList<Raffle> = mutableListOf()) : Data("data/raffles.json")
+data class RaffleEntries(val raffles: MutableList<Raffle> = mutableListOf()) : Data("data/raffles.json", false)

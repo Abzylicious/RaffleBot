@@ -23,4 +23,4 @@ data class Messages(
     val NO_RAFFLES_AVAILABLE: String = "There are no raffles",
     val NO_WINNER_AVAILABLE: String = "No one participated in this raffle or you tried to draw more winners than there are participants",
     val CONGRATULATION: String = "Congratulations to the following winner(s)!"
-) : Data("config/messages.json")
+) : Data("config/messages.json", false)
