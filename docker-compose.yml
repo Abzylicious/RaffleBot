@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  rafflebot:
+    container_name: RaffleBot
+    image: theprogrammershangout/rafflebot:latest
+    volumes:
+      - './config:/rafflebot/config'
+      - './data:/rafflebot/data'
+    restart: always
+    env_file:
+      - .env

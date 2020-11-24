@@ -3,6 +3,7 @@ data/*
 .idea/**
 target/**
 **.iml
+.env
 
 # Compiled class file
 *.class
