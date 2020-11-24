@@ -11,6 +11,7 @@
     <packaging>jar</packaging>
 
     <properties>
+        <main.class>me.abzylicious.rafflebot.MainKt</main.class>
         <project.author>Abzy#6573</project.author>
         <project.repository>https://github.com/the-programmers-hangout/RaffleBot</project.repository>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -103,6 +104,31 @@
                         <goals>
                             <goal>test-compile</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>rafflebot</finalName>
+                            <archive>
+                                <manifest>
+                                    <mainClass>${main.class}</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
