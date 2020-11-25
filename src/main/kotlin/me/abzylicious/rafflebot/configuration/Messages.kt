@@ -3,7 +3,7 @@ package me.abzylicious.rafflebot.configuration
 import me.jakejmattson.discordkt.api.dsl.Data
 
 data class Messages(
-    val NO_TOKEN_PROVIDED: String = "Expected the bot token as an environment variable",
+    val NO_TOKEN_PROVIDED: String = "Expected the bot token as argument or an environment variable",
     val GUILD_CONFIGURATION_EXISTS: String = "Guild configuration exists. To modify it use the respective commands to set values.",
     val GUILD_CONFIGURATION_NOT_FOUND: String = "Guild configuration not found. Please run the **configure** command to set this initially.",
     val SETUP_PREFIX_DECISION: String = "Would you like to set a new bot prefix? The default bot prefix is **raffle!**. This can be changed later via the **setprefix** command.",

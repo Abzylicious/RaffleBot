@@ -14,12 +14,14 @@ import java.awt.Color
 
 suspend fun main(args: Array<String>) {
     val messages = Messages()
-    val token = System.getenv("BOT_TOKEN") ?: null
+    val token = args.firstOrNull()
+        ?: System.getenv("BOT_TOKEN")
+        ?: null
 
     require(token != null) { messages.NO_TOKEN_PROVIDED }
 
-    val propertyFile = Project::class.java.getResource("/properties.json").readText()
-    val project = Gson().fromJson(propertyFile, Project::class.java)
+    val botOwnerId = System.getenv("BOT_OWNER") ?: "none"
+    Configuration(ownerId = botOwnerId).save()
 
     bot(token) {
         prefix {
@@ -36,6 +38,8 @@ suspend fun main(args: Array<String>) {
         }
 
         mentionEmbed {
+            val propertyFile = Project::class.java.getResource("/properties.json").readText()
+            val project = Gson().fromJson(propertyFile, Project::class.java)
             createBotInformationEmbed(it, project)
         }
 
