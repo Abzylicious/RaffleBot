@@ -15,7 +15,7 @@
         <project.author>Abzy#6573</project.author>
         <project.repository>https://github.com/the-programmers-hangout/RaffleBot</project.repository>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.4.10</kotlin.version>
+        <kotlin.version>1.6.0</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
         <discordkt.version>0.21.3</discordkt.version>
         <junit.version>4.13.1</junit.version>
